@@ -13,7 +13,8 @@ namespace LearnSaveAttachmentOnServer.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [FileAttachment("File")]
-    [RuleCriteria("RuleCriteria for ImageStoreObjectDemo", DefaultContexts.Save, "ImageEkstentionValidation", CustomMessageTemplate = "Attachment Only Allowed (*.jpg, *.jpeg, *.png) file")]
+    [RuleCriteria("RuleCriteria for ImageStoreObjectDemo", DefaultContexts.Save, nameof(ImageEkstentionValidation), CustomMessageTemplate = "Attachment Only Allowed (*.jpg, *.jpeg, *.png) file")]
+    [RuleCriteria("RuleCriteria for ImageStoreObjectDemo1", DefaultContexts.Save, nameof(ImageSizeValidation), CustomMessageTemplate = "Attachment Size Should be lower than 2 MB")]
     public class ImageStoreObjectDemo : BaseObject
     {
         public ImageStoreObjectDemo(Session session) : base(session) { }
@@ -29,10 +30,27 @@ namespace LearnSaveAttachmentOnServer.Module.BusinessObjects
         {
             get 
             {
-                var fileName = File.FileName;
-                if (!fileName.Contains(".jpg") && !fileName.Contains(".jpeg") && !fileName.Contains(".png"))
+                if (File != null)
                 {
-                    return false;
+                    var fileName = File.FileName;
+                    if (!fileName.Contains(".jpg") && !fileName.Contains(".jpeg") && !fileName.Contains(".png"))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        private bool ImageSizeValidation
+        {
+            get
+            {
+                if (File != null)
+                {
+                    if (File.Size > 2000000)
+                    {
+                        return false;
+                    }
                 }
                 return true;
             }
