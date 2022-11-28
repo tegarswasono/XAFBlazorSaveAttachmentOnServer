@@ -13,10 +13,10 @@ namespace LearnSaveAttachmentOnServer.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [FileAttachment("File")]
-    [RuleCriteria("RuleCriteria for ImageStoreObjectDemo", DefaultContexts.Save, "ImageEkstentionValidation", CustomMessageTemplate = "Attachment Only Allowed (*.jpg, *.jpeg, *.png) file")]
-    public class ImageStoreObjectDemo : BaseObject
+    [RuleCriteria("RuleCriteria for ImageStoreObjectDemo1", DefaultContexts.Save, "ImageEkstentionValidation", CustomMessageTemplate = "Attachment Only Allowed (*.jpg, *.jpeg, *.png) file")]
+    public class ImageStoreObjectDemo1 : BaseObject
     {
-        public ImageStoreObjectDemo(Session session) : base(session) { }
+        public ImageStoreObjectDemo1(Session session) : base(session) { }
 
         [VisibleInDetailView(false)]
         [VisibleInListView(false)]
@@ -53,10 +53,6 @@ namespace LearnSaveAttachmentOnServer.Module.BusinessObjects
             {
                 if (File != null)
                 {
-                    //if (File.TempSourceStream != null)
-                    //{
-                    //    return Helpers.Utils.ConvertStreamToByteArray(File.TempSourceStream);
-                    //}
                     if (File.RealFileName != null)
                     {
                         if (System.IO.File.Exists(File.RealFileName))
